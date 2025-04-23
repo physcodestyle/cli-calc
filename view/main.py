@@ -42,6 +42,31 @@ DESCRIPTION
     print(output)
 
 
+def extract_options(args: list[str]) -> tuple[tuple[str], Exception]:
+    output = []
+    options = map(lambda k: '--' + k, dict.keys(BASIC_OPTIONS))
+    for row_arg in args:
+        arg = row_arg.split('=')
+        if arg[0] in options:
+            output.append({
+                'key': arg[0][2:],
+                'value': arg[1] if len(arg) > 1 else None,
+            })
+        elif arg[0] in map(lambda o: o[1:2], options):
+            index = -1
+            for i in range(len(options)):
+                if options[i].startswith('-' + arg[0]):
+                    index = i
+                    break
+            output.append({
+                'key': options[index][2:],
+                'value': arg[1] if len(arg) > 1 else None,
+            })
+        else:
+            return output, ValueError
+    return output, None
+
+
 def choose_mode(row_args: list[str]):
     args = row_args[1:]
     if len(args) == 0:

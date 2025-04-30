@@ -1,6 +1,6 @@
 import sys
 
-from view.main import choose_mode
+from controller.main import run
 
 if __name__ == '__main__':
-    choose_mode(sys.argv)
+    run(sys.argv)

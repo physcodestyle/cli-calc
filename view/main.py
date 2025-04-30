@@ -1,3 +1,8 @@
+import re
+from view.interactive import show as show_ui
+from view.terminal import show as show_terminal
+
+
 APP_VERSION = '0.1.0'
 TAB_SPACES_COUNT = 8
 BASIC_OPTIONS = {
@@ -84,8 +89,39 @@ def extract_options(args: list[str]) -> tuple[tuple[str], Exception]:
     return output, None
 
 
-def choose_mode(row_args: list[str]):
+def process_args(args: list[str]) -> tuple[str, list[dict], list[dict], Exception]:
+    options, err = extract_options(args)
+    if err != None:
+        return ('', options, [], err)
+    values, err = extract_values(args)
+    if err != None:
+        return ('', options, values, err)
+    if len(values):
+        return ('values', options, values, None)
+    return ('options', options, values, None)
+
+
+def detect_mode(options: tuple[str], mode_key: str) -> Exception:
+    is_mode_detected = False
+    for opt in options:
+        if opt["key"] == mode_key:
+            is_mode_detected = True
+    return is_mode_detected
+
+
+def choose_mode(row_args: list[str]) -> Exception:
     args = row_args[1:]
     if len(args) == 0:
         print_help()
+    else:
+        terminal_mode, options, values, err = process_args(args)
+        if err != None:
+            return err
+        elif detect_mode(options=options, mode_key='help'):
+            print_help()
+        elif detect_mode(options=options, mode_key='interactive'):
+            return show_ui(terminal_mode, options, values)
+        else:
+            return show_terminal(terminal_mode, options, values)
+    return None
 

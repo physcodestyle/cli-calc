@@ -80,7 +80,7 @@ def extract_options(args: list[str]) -> tuple[tuple[str], Exception]:
                 'value': arg[1] if len(arg) > 1 else None,
             })
         else:
-            return output, ValueError
+            continue
     return output, None
 
 

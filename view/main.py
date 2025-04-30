@@ -42,6 +42,22 @@ DESCRIPTION
     print(output)
 
 
+def extract_values(args: list[str]) -> tuple[tuple[str], Exception]:
+    output = []
+    for row_arg in args:
+        if row_arg.startswith('-'):
+            continue
+        elif re.match(r'^([Tt]rue|[Ff]alse)$', row_arg):
+            output.append({ "type": "bool", "value": bool(re.match(r'[Tt]rue', row_arg)) })
+        elif re.match(r'^\d+$', row_arg):
+            output.append({ "type": "int", "value": int(row_arg) })
+        elif re.match(r'^-?\d+(?:\.\d+)$', row_arg):
+            output.append({ "type": "float", "value": float(row_arg) })
+        else:
+            output.append({ "type": "str", "value": row_arg })
+    return output, None
+
+
 def extract_options(args: list[str]) -> tuple[tuple[str], Exception]:
     output = []
     options = list(map(lambda k: '--' + k, dict.keys(BASIC_OPTIONS)))

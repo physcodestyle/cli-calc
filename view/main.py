@@ -44,7 +44,8 @@ DESCRIPTION
 
 def extract_options(args: list[str]) -> tuple[tuple[str], Exception]:
     output = []
-    options = map(lambda k: '--' + k, dict.keys(BASIC_OPTIONS))
+    options = list(map(lambda k: '--' + k, dict.keys(BASIC_OPTIONS)))
+    opts = list(map(lambda o: o[1:3], options))
     for row_arg in args:
         arg = row_arg.split('=')
         if arg[0] in options:
@@ -52,7 +53,7 @@ def extract_options(args: list[str]) -> tuple[tuple[str], Exception]:
                 'key': arg[0][2:],
                 'value': arg[1] if len(arg) > 1 else None,
             })
-        elif arg[0] in map(lambda o: o[1:2], options):
+        elif arg[0] in opts:
             index = -1
             for i in range(len(options)):
                 if options[i].startswith('-' + arg[0]):

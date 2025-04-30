@@ -1,17 +1,12 @@
 from typing import Any
-from add import calc as add_calc
-from add import settings as add_settings
+from models.add import calc as add_calc, get_values as add_get_values
 
 
-def calc(*args: Any, operation: str) -> Any:
-    if operation == 'add':
-        preprocessed_args = map(lambda arg: float(arg), args)
-        result, err = add_calc(preprocessed_args)
-        if err != None:
-            print(err)
-        return result
+def calc(model: str, values: list[dict]) -> tuple[float, Exception]:
+    if model == 'add':
+        return add_calc(values=values)
 
 
-def settings(operation: str) -> dict:
-    if operation == 'add':
-        return add_settings()
+def get_values(model: str) -> str:
+    if model == 'add':
+        return add_get_values()

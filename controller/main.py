@@ -16,7 +16,7 @@ def run(row_args: list[str]):
     model = chose_model(options=options)
     result, err = model_calc(model=model, values=values)
     if err != None:
-        values, err = get_values_from_user(mode='', message=model_get_values_message(model=model))
+        values, err = get_values_from_user(mode=mode, message=model_get_values_message(model=model))
         if err != None:
             print(err)
         result, err = model_calc(model=model, values=values)

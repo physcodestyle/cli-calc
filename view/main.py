@@ -1,50 +1,9 @@
 import re
+from view.constants import BASIC_OPTIONS
 from view.interactive import show_greeting as show_ui, request_values as get_values_from_ui
 from view.terminal import show_greeting as show_terminal, request_values as get_values_from_terminal
 from view.info import show_greeting as show_info
-
-
-APP_VERSION = '0.1.0'
-TAB_SPACES_COUNT = 8
-BASIC_OPTIONS = {
-    'help': 'Show this help',
-    'interactive': 'Use interactive mode',
-    'list': 'Show all available models',
-    'model': 'Use chosen model for calculation',
-    'params': 'Use params for chosen calculation model',
-    'output': 'Use chosen output type',
-}
-
-
-def print_help():
-    output = f'''CLI Calc (v{APP_VERSION})
-
-NAME
-\tpython calc.py — CLI Calc for run different calculations
-
-SYNOPSIS
-\tpython calc.py [--help] [--interactive] [--list] [--model=<model's name>] [--params=<model's params>] [--input=<float numbers>] [--output=<output type>]
-
-\tpython calc.py [<model's name>] [help] [--params=<model's params>] [<float/int numbers>]
-
-DESCRIPTION
-\tCLI Calc is a universal calculator for terminal which could use any models as an extension for math calculating based on input args with chosen output type.
-
-\tThe following options ara available:
-'''
-    keys = list(dict.keys(BASIC_OPTIONS))
-    tabs = []
-
-    for k in keys:
-        tabs.append((len(k) + 6) // TAB_SPACES_COUNT)
-
-    for i in range(len(keys)):
-        output += '\n\t--' + keys[i]
-        output += ', -' + keys[i][0] + '\t'
-        output += ''.join(['\t' for _ in range(max(tabs) - tabs[i])])
-        output += BASIC_OPTIONS[keys[i]] + '\n'
-
-    print(output)
+from view.help import show_greeting as show_help
 
 
 def extract_values(args: list[str]) -> tuple[tuple[str], Exception]:
@@ -118,7 +77,7 @@ def detect_mode(options: tuple[str], mode_key: str) -> bool:
 def choose_mode(row_args: list[str]) -> tuple[list[dict], list[dict], Exception]:
     args = row_args[1:]
     if len(args) == 0:
-        print_help()
+        show_help()
     else:
         terminal_mode, options, values, err = process_args(args)
         if err != None:
@@ -126,7 +85,7 @@ def choose_mode(row_args: list[str]) -> tuple[list[dict], list[dict], Exception]
         elif detect_mode(options=options, mode_key='list'):
             show_info(terminal_mode, options, values)
         elif detect_mode(options=options, mode_key='help') and not detect_mode(options=options, mode_key='model'):
-            print_help()
+            show_help()
         elif detect_mode(options=options, mode_key='interactive'):
             return show_ui(terminal_mode, options, values)
         else:

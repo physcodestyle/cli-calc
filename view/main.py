@@ -22,7 +22,7 @@ NAME
 \tpython calc.py — CLI Calc for run different calculations
 
 SYNOPSIS
-\tpython calc.py [--help] [--interactive] [--model-list] [--model=<model's name>] [--params=<model's params>] [--input=<float numbers>] [--output=<output type>]
+\tpython calc.py [--help] [--interactive] [--list] [--model=<model's name>] [--params=<model's params>] [--input=<float numbers>] [--output=<output type>]
 
 \tpython calc.py [<model's name>] [help] [--params=<model's params>] [<float/int numbers>]
 

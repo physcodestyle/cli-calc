@@ -77,7 +77,7 @@ def detect_mode(options: tuple[str], mode_key: str) -> bool:
 def choose_mode(row_args: list[str]) -> tuple[list[dict], list[dict], Exception]:
     args = row_args[1:]
     if len(args) == 0:
-        show_help()
+        show_help('', [], [])
     else:
         terminal_mode, options, values, err = process_args(args)
         if err != None:

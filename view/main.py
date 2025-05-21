@@ -85,7 +85,7 @@ def choose_mode(row_args: list[str]) -> tuple[list[dict], list[dict], Exception]
         elif detect_mode(options=options, mode_key='list'):
             show_info(terminal_mode, options, values)
         elif detect_mode(options=options, mode_key='help') and not detect_mode(options=options, mode_key='model'):
-            show_help()
+            show_help(terminal_mode, options, values)
         elif detect_mode(options=options, mode_key='interactive'):
             return show_ui(terminal_mode, options, values)
         else:

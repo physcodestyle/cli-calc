@@ -11,7 +11,6 @@ BASIC_OPTIONS = {
     'list': 'Show all available models',
     'model': 'Use chosen model for calculation',
     'params': 'Use params for chosen calculation model',
-    'values': 'Use input values for chosen models (compatible float numbers)',
     'output': 'Use chosen output type',
 }
 

@@ -6,9 +6,9 @@ def print_help(model: str):
         return add_help()
 
 
-def calc(model: str, values: list[dict]) -> tuple[float, Exception]:
+def calc(model: str, values: list[dict], params: str) -> tuple[float, Exception]:
     if model == 'add':
-        return add_calc(values=values)
+        return add_calc(values=values, params=params)
 
 
 def get_values(model: str) -> str:

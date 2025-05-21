@@ -16,6 +16,13 @@ def chose_model(options: list[dict]) -> str:
     return ''
 
 
+def get_params(options: list[dict]) -> str:
+    for opt in options:
+        if opt['key'] == 'params':
+            return opt['value']
+    return ''
+
+
 def run(row_args: list[str]):
     mode, options, values, err = select_view_mode(row_args=row_args)
     if err != None:
@@ -24,7 +31,7 @@ def run(row_args: list[str]):
     if is_help_mode(options=options):
         model_help(model=model)
     else:
-        result, err = model_calc(model=model, values=values)
+        result, err = model_calc(model=model, values=values, params=get_params(options=options))
         if err != None:
             values, err = get_values_from_user(mode=mode, message=model_get_values_message(model=model))
             if err != None:

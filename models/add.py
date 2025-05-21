@@ -13,9 +13,9 @@ NAME
 \tpython calc.py -m=add — Using Add Model for CLI Calc
 
 SYNOPSIS
-\tpython calc.py -m=add [--help] [--progression=<step count>] [<float/int numbers>]
+\tpython calc.py -m=add [--help] [--params=progression] [<float/int numbers>] (3 values for arithmetic progression: basis, step, step_count)
 
-\tpython calc.py add [help] [--progression=<step count>] [<float/int numbers>]
+\tpython calc.py add [help] [--params=progression] [<float/int numbers>] (3 values for arithmetic progression: basis, step, step_count)
 
 DESCRIPTION
 \tAdd Model for CLI Calc is a model for calculation of summa of numbers (also use for arithmetic progression).
@@ -37,12 +37,17 @@ DESCRIPTION
     print(output)
 
 
-def calc(values: list[dict]) -> tuple[float, Exception]:
+def calc(values: list[dict], params: str) -> tuple[float, Exception]:
     result = 0
     if not is_valid(values=values):
         return (result, ValueError)
-    for val in values:
-        result += val['value']
+    if is_progression_mode(params=params):
+        result = values[0]['value']
+        for _ in range(values[2]['value']):
+            result += values[1]['value']
+    else:
+        for val in values:
+            result += val['value']
     return (result, None)
 
 
@@ -55,3 +60,7 @@ def is_valid(values: list[dict]) -> bool:
 
 def get_values() -> str:
     return 'Please enter integer or float values divided by space: '
+
+
+def is_progression_mode(params: str) -> bool:
+    return params == 'progression'

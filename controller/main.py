@@ -1,5 +1,12 @@
 from view.main import choose_mode as select_view_mode, request_values as get_values_from_user
-from models.main import calc as model_calc, get_values as model_get_values_message
+from models.main import print_help as model_help, calc as model_calc, get_values as model_get_values_message
+
+
+def is_help_mode(options: list[dict]) -> str:
+    for opt in options:
+        if opt['key'] == 'help':
+            return True
+    return False
 
 
 def chose_model(options: list[dict]) -> str:
@@ -14,12 +21,15 @@ def run(row_args: list[str]):
     if err != None:
         print(err)
     model = chose_model(options=options)
-    result, err = model_calc(model=model, values=values)
-    if err != None:
-        values, err = get_values_from_user(mode=mode, message=model_get_values_message(model=model))
-        if err != None:
-            print(err)
+    if is_help_mode(options=options):
+        model_help(model=model)
+    else:
         result, err = model_calc(model=model, values=values)
         if err != None:
-            print(err)
-    print(result)
+            values, err = get_values_from_user(mode=mode, message=model_get_values_message(model=model))
+            if err != None:
+                print(err)
+            result, err = model_calc(model=model, values=values)
+            if err != None:
+                print(err)
+        print(result)

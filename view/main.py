@@ -25,7 +25,7 @@ NAME
 SYNOPSIS
 \tpython calc.py [--help] [--interactive] [--model-list] [--model=<model's name>] [--params=<model's params>] [--input=<float numbers>] [--output=<output type>]
 
-\tpython calc.py [<model's name>] [help] [--params=<model's params>] [<float numbers>]
+\tpython calc.py [<model's name>] [help] [--params=<model's params>] [<float/int numbers>]
 
 DESCRIPTION
 \tCLI Calc is a universal calculator for terminal which could use any models as an extension for math calculating based on input args with chosen output type.
@@ -117,7 +117,7 @@ def choose_mode(row_args: list[str]) -> tuple[list[dict], list[dict], Exception]
         terminal_mode, options, values, err = process_args(args)
         if err != None:
             return err
-        elif detect_mode(options=options, mode_key='help'):
+        elif detect_mode(options=options, mode_key='help') and not detect_mode(options=options, mode_key='model'):
             print_help()
         elif detect_mode(options=options, mode_key='interactive'):
             return show_ui(terminal_mode, options, values)

@@ -1,6 +1,7 @@
 import re
 from view.interactive import show_greeting as show_ui, request_values as get_values_from_ui
 from view.terminal import show_greeting as show_terminal, request_values as get_values_from_terminal
+from view.info import show_greeting as show_info
 
 
 APP_VERSION = '0.1.0'
@@ -122,6 +123,8 @@ def choose_mode(row_args: list[str]) -> tuple[list[dict], list[dict], Exception]
         terminal_mode, options, values, err = process_args(args)
         if err != None:
             return err
+        elif detect_mode(options=options, mode_key='list'):
+            show_info(terminal_mode, options, values)
         elif detect_mode(options=options, mode_key='help') and not detect_mode(options=options, mode_key='model'):
             print_help()
         elif detect_mode(options=options, mode_key='interactive'):

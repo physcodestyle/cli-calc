@@ -1,10 +1,17 @@
 from view.main import choose_mode as select_view_mode, request_values as get_values_from_user
-from models.main import print_help as model_help, calc as model_calc, get_values as model_get_values_message
+from models.main import print_help as model_help, print_list as model_list, calc as model_calc, get_values as model_get_values_message
 
 
 def is_help_mode(options: list[dict]) -> str:
     for opt in options:
         if opt['key'] == 'help':
+            return True
+    return False
+
+
+def is_list_mode(options: list[dict]) -> str:
+    for opt in options:
+        if opt['key'] == 'list':
             return True
     return False
 
@@ -30,6 +37,8 @@ def run(row_args: list[str]):
     model = chose_model(options=options)
     if is_help_mode(options=options):
         model_help(model=model)
+    elif is_list_mode(options=options):
+        model_list()
     else:
         result, err = model_calc(model=model, values=values, params=get_params(options=options))
         if err != None:

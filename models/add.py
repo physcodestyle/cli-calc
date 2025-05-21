@@ -6,6 +6,10 @@ BASIC_OPTIONS = {
 }
 
 
+def get_short_info():
+    return f'\tadd:\tAdd Model (v{MODEL_VERSION}) — is for calculation of summa of numbers (also use for arithmetic progression).'
+
+
 def print_help():
     output = f'''Add Model (v{MODEL_VERSION})
 

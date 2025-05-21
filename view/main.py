@@ -96,12 +96,18 @@ def process_args(args: list[str]) -> tuple[str, list[dict], list[dict], Exceptio
     values, err = extract_values(args)
     if err != None:
         return ('', options, values, err)
-    if len(values):
+    if len(values) > 0:
+        if not detect_mode(options=options, mode_key='model') and values[0]['type'] == 'str':
+            options.append({
+                'key': 'model',
+                'value': values[0]['value'],
+            })
+            values = values[1:]
         return ('values', options, values, None)
     return ('options', options, values, None)
 
 
-def detect_mode(options: tuple[str], mode_key: str) -> Exception:
+def detect_mode(options: tuple[str], mode_key: str) -> bool:
     is_mode_detected = False
     for opt in options:
         if opt['key'] == mode_key:

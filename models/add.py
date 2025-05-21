@@ -51,15 +51,15 @@ def calc(values: list[dict], params: str) -> tuple[float, Exception]:
     return (result, None)
 
 
+def get_values() -> str:
+    return 'Please enter integer or float values divided by space: '
+
+
 def is_valid(values: list[dict]) -> bool:
     for val in values:
         if val['type'] != 'int' and val['type'] != 'float':
             return False
     return True
-
-
-def get_values() -> str:
-    return 'Please enter integer or float values divided by space: '
 
 
 def is_progression_mode(params: str) -> bool:

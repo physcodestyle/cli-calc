@@ -2,14 +2,14 @@ from view.main import choose_mode as select_view_mode, request_values as get_val
 from models.main import print_help as model_help, print_list as model_list, calc as model_calc, get_values as model_get_values_message
 
 
-def is_help_mode(options: list[dict]) -> str:
+def is_help_mode(options: list[dict]) -> bool:
     for opt in options:
         if opt['key'] == 'help':
             return True
     return False
 
 
-def is_list_mode(options: list[dict]) -> str:
+def is_list_mode(options: list[dict]) -> bool:
     for opt in options:
         if opt['key'] == 'list':
             return True

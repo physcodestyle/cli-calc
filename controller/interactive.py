@@ -1,5 +1,5 @@
 import re
-from models.main import MODEL_LIST, print_help as model_help, print_list as model_list, calc as model_calc, get_values as model_get_values_message
+from models.main import MODEL_LIST, print_help, print_list as model_list, calc as model_calc, get_values as model_get_values_message
 
 
 EXIT_STATE = 0
@@ -25,7 +25,7 @@ def change_state(state: int, data: dict, user_input: tuple[str, list[dict]]) -> 
         model_keys = list(dict.keys(MODEL_LIST))
         model = model_keys[int(user_input) - 1]
         data['model'] = model
-        print(model_help(model=model))
+        print_help(model=model)
         return (OPTION_STATE, data, True)
     elif state == OPTION_STATE:
         data['params'] = user_input

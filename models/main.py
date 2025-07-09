@@ -18,6 +18,7 @@ def print_list():
     counter = 1
     for m in dict.keys(MODEL_LIST):
         output.append(f'{counter}. {MODEL_LIST[m]}')
+        counter += 1
     return '\n'.join(output)
 
 

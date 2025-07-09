@@ -14,7 +14,7 @@ Please choose from following models by input according number...
 
 ''',
     '4': '''
-Please input a list of values divided by space to get a result of calculation...
+List of values:
 
 ''',
     '8': '''
